@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dynamic-bg min-h-screen text-white flex items-center justify-center p-4">
+
+    <div id="app-container" class="w-full max-w-[390px] h-[812px] bg-[#1a1a1a]/70 rounded-[48px] p-6 relative flex flex-col justify-between overflow-hidden opacity-0 shadow-2xl border border-white/5 backdrop-blur-2xl">
+        
+        <div class="absolute -top-20 -right-20 w-44 h-44 bg-indigo-600/20 blur-3xl rounded-full pointer-events-none"></div>
+        <div class="absolute bottom-10 -left-20 w-44 h-44 bg-purple-600/10 blur-3xl rounded-full pointer-events-none"></div>
+
+        <header class="relative z-10 flex items-center justify-between mt-4">
+            <button id="add-location-btn" class="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 active:scale-95 transition-transform duration-200">
+                <i class="fa-solid fa-plus text-sm text-white/70"></i>
+            </button>
+
+            <div class="text-center">
+                <h2 id="city-name" class="text-sm font-semibold tracking-wide text-white/90">LOADING...</h2>
+            </div>
+
+            <button id="unit-toggle-btn" class="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 active:scale-95 transition-transform duration-200 text-xs font-bold text-purple-400">
+                °C
+            </button>
+        </header>
+
+        <div class="relative z-10 mt-4">
+            <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-white/30 text-xs pointer-events-none"></i>
+            <input 
+                type="text" 
+                id="location-input"
+                placeholder="Search location..." 
+                class="w-full bg-white/5 border border-white/5 rounded-full py-2.5 pl-10 pr-4 text-xs font-medium focus:outline-none focus:border-purple-500/30 focus:bg-white/10 transition-all duration-300 placeholder:text-white/20"
+            />
+        </div>
+
+        <div class="flex flex-col items-center justify-center flex-1 my-2 relative z-10">
+            <div id="weather-icon-wrapper" class="cursor-pointer group select-none my-2">
+                <i id="main-weather-icon" class="fa-solid fa-circle-notch fa-spin text-5xl text-white/40 drop-shadow-[0_15px_25px_rgba(0,0,0,0.5)]"></i>
+            </div>
+
+            <div class="text-center mt-2 w-full">
+                <div class="flex items-start justify-center translate-x-3">
+                    <span id="main-temp" class="text-[84px] font-light tracking-tighter leading-none select-none">--</span>
+                    <span id="main-unit" class="text-2xl font-normal text-white/40 mt-2 ml-0.5">°</span>
+                </div>
+                
+                <p id="weather-condition" class="text-xs text-white/60 font-medium mt-1 tracking-wide uppercase">UPDATING...</p>
+                
+                <p id="temp-bounds" class="text-[10px] text-white/40 font-medium tracking-wide mt-1">
+                    <i class="fa-solid fa-arrow-up text-purple-400/70"></i> High° &nbsp;&nbsp; 
+                    <i class="fa-solid fa-arrow-down text-indigo-400/70"></i> Low°
+                </p>
+            </div>
+        </div>
+
+        <div id="bento-container" class="grid grid-cols-3 gap-2.5 bg-[#262626]/40 border border-white/5 rounded-3xl p-4 mb-3 relative z-10 backdrop-blur-md">
+            <div class="flex flex-col items-center text-center">
+                <i class="fa-solid fa-wind text-xs text-white/30 mb-2"></i>
+                <span id="metric-wind" class="text-xs font-semibold tracking-tight">-- <span class="text-[9px] text-white/40 font-normal">ms</span></span>
+                <span class="text-[9px] text-white/30 font-medium mt-0.5">Wind</span>
+            </div>
+
+            <div class="flex flex-col items-center text-center border-x border-white/5">
+                <i class="fa-solid fa-droplet text-xs text-white/30 mb-2"></i>
+                <span id="metric-humidity" class="text-xs font-semibold tracking-tight">--<span class="text-[9px] text-white/40 font-normal">%</span></span>
+                <span class="text-[9px] text-white/30 font-medium mt-0.5">Humidity</span>
+            </div>
+
+            <div class="flex flex-col items-center text-center">
+                <i class="fa-solid fa-sun text-xs text-white/30 mb-2"></i>
+                <span id="metric-uv" class="text-xs font-semibold tracking-tight">--</span>
+                <span class="text-[9px] text-white/30 font-medium mt-0.5">Sun</span>
+            </div>
+        </div>
+
+        <div class="mb-4 relative z-10">
+            <div id="forecast-row" class="flex gap-2 items-center overflow-x-auto no-scrollbar justify-between">
+                </div>
+        </div>
+
+    </div>
+
+    <div id="location-modal" class="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center p-4 z-50 hidden opacity-0">
+        <div class="w-full max-w-[320px] bg-[#1a1a1a]/90 border border-white/10 rounded-[32px] p-6 shadow-2xl scale-95 transform transition-transform duration-300">
+            
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-sm font-semibold text-white/90 tracking-wide">Add New Location</h3>
+                <button id="close-modal-btn" class="text-white/40 hover:text-white/80 transition-colors">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            </div>
+            
+            <div class="relative mb-4">
+                <i class="fa-solid fa-location-dot absolute left-4 top-1/2 -translate-y-1/2 text-purple-400 text-xs"></i>
+                <input 
+                    type="text" 
+                    id="modal-location-input"
+                    placeholder="Enter city name..." 
+                    class="w-full bg-white/5 border border-white/5 rounded-full py-2.5 pl-10 pr-4 text-xs font-medium focus:outline-none focus:border-purple-500/30 focus:bg-white/10 transition-all duration-300 placeholder:text-white/20 text-white"
+                />
+            </div>
+            
+            <button id="submit-location-btn" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium text-xs py-3 rounded-full shadow-lg shadow-indigo-600/20 active:scale-[0.98] transition-all duration-200">
+                Check
+            </button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

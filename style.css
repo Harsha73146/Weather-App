@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: #0b0b0c;
+}
+
+.dynamic-bg {
+    background: radial-gradient(circle at 50% 30%, #1e1e24 0%, #0c0c0e 100%);
+    transition: background 1.5s ease-in-out;
+}
+
+.no-scrollbar::-webkit-scrollbar { 
+    display: none; 
+}
+.no-scrollbar { 
+    -ms-overflow-style: none; 
+    scrollbar-width: none; 
+}
+
+.forecast-active {
+    background: linear-gradient(180deg, #5b4bf6 0%, #3b2dd0 100%) !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    box-shadow: 0 10px 20px rgba(91, 75, 246, 0.25);
+}
+
+.modal-open {
+    overflow: hidden;
+}
