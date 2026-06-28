@@ -1,14 +1,48 @@
-Modern Weather Application:-
+# 🌤️ Weather App
 
-Premium weather web application built using HTML5, CSS and JavaScript. This application connects to the OpenWeatherMap API to fetch and display real time global weather conditions accompanied by smooth and high quality micro interactions.
+A modern, responsive weather application built using **HTML, CSS, and JavaScript**. This app provides real time weather information, a 5-day forecast, location based weather updates, dark mode, and a beautiful animated interface.
 
-Features:-
+## 🌐 Live Demo
 
-Real Time Data Fetching     :- Integrates with OpenWeatherMap API to fetch live temperature, wind speed, humidity, and weather conditions.
-Premium Animations          :-Uses GSAP  shaking animations on invalid search errors, and 3D hover effects on the weather icon.
-Dual Unit Support           :-Easily toggle between Celsius (°C) and Fahrenheit (°F) with values adjusting automatically.
-Design                      :-Beautifully designed glass layout using CSS backdrop blur and border white opacity configurations.
+👉 https://harsha73146.github.io/Weather-App/
 
-Technologies :-HTML
-               CSS
-               JavaScript
+## ✨ Features
+
+- 🌍 Current Location Weather
+- 🔍 Search Weather by City
+- 🌡️ Temperature Unit Switch (°C / °F)
+- 📅 5-Day Weather Forecast
+- 🌤️ Dynamic Weather Icons
+- 🌙 Dark / Light Mode
+- 💨 Wind Speed
+- 💧 Humidity
+- ☀️ UV Index
+- 🎨 Modern UI with Smooth Animations
+- 📱 Fully Responsive Design
+- ⚡ Fast and Lightweight
+
+---
+## 🛠️ Built With
+
+- HTML
+- CSS
+- JavaScript
+- Weather API
+---
+
+## 📂 Project Structure
+
+
+Weather-App/
+│
+├── index.html
+├── style.css
+├── app.js
+└── README.md
+---
+The application works perfectly on:
+
+💻 Desktop
+💼 Laptop
+📱 Mobile
+📲 Tablet
