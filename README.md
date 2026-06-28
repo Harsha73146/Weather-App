@@ -1,6 +1,6 @@
 # 🌤️ Weather App
 
-A modern, responsive weather application built using **HTML, CSS, and JavaScript**. This app provides real time weather information, a 5-day forecast, location based weather updates, dark mode, and a beautiful animated interface.
+A modern, responsive weather application built using **HTML, CSS, and JavaScript**. This app provides real time weather information, a 5 day forecast, location based weather updates, dark mode, and a beautiful animated interface.
 
 ## 🌐 Live Demo
 
